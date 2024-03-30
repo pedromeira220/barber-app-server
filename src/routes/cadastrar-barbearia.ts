@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 import { hash } from 'bcryptjs'
 
-export const registrarBarbearia = async (req: Request, res: Response) => {
+export const cadastrarBarbearia = async (req: Request, res: Response) => {
   const {nome, email, senha} = req.body
 
   if(!nome) {
