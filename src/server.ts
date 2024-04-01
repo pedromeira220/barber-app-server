@@ -1,5 +1,6 @@
 import express from "express"
 import { app } from "./app";
+import "dotenv"
 
 const PORT = 3333
 

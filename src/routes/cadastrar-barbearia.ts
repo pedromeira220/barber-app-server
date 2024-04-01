@@ -9,13 +9,24 @@ export const cadastrarBarbearia = async (req: Request, res: Response) => {
     return res.status(400).json({
       msg: "O nome é obrigatório"
     })
-  } // TODO: Fazer essa verificação para cada parâmetro de criação de uma barbearia (fazer mais para o email e a senha)
+  } 
 
-  // A gnt precisa fazer o hash da senha
+  if(!email) {
+    return res.status(400).json({
+      msg: "O email é obrigatório"
+    })
+  } 
+
+  if(!senha) {
+    return res.status(400).json({
+      msg: "A senha é obrigatória"
+    })
+  } 
+
   const hashDaSenha = await hash(senha, 6)
 
   // Aqui a barbearia é criada no banco de dados
-  const barbearia = prisma.barbearia.create({
+  const barbearia = await prisma.barbearia.create({
     data: {
       email,
       hash_senha: hashDaSenha, 
@@ -23,7 +34,7 @@ export const cadastrarBarbearia = async (req: Request, res: Response) => {
     }
   })
 
-  // Aqui a gnt retorna na api a barbearia
+  // Aqui a gnt retorna a barbearia criada na api
   return res.json({
     barbearia
   })
