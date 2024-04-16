@@ -14,8 +14,10 @@ datasource db {
 }
 
 model Barbearia {
-  id         String @id @default(uuid())
-  nome       String
-  email      String
-  hash_senha String
+  id               String @id @default(uuid())
+  nome             String
+  email            String
+  hash_senha       String
+  nome_contato     String // Esse será um campo para anotar o nome da pessoa a qual entraremos em contato
+  telefone_contato String
 }

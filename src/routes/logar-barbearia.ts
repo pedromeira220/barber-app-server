@@ -6,8 +6,6 @@ import jwt from 'jsonwebtoken';
 export const logarBarbearia = async (req: Request, res: Response) => {
   const {email, senha} = req.body
 
-  // Para logar uma barbearia no sistema, é necessário receber o nome e a senha
-
   if(!email) {
     return res.status(400).json({
       msg: "O email é obrigatório"
@@ -41,12 +39,12 @@ export const logarBarbearia = async (req: Request, res: Response) => {
   }
 
   try {
-    const secret = process.env.JWT_SECRET
+    const secret = process.env.JWT_SECRET || "" // Só para tirar o erro de tipagem
     const token = jwt.sign({
         id: barbeariaEncontrada.id,
     }, secret);
 
-    return res.status(200).json({ barbearia: { email, token, id: barbeariaEncontrada.id } });
+    return res.status(200).json({ barbearia: { email, id: barbeariaEncontrada.id }, token });
 } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "Erro interno do servidor" });
