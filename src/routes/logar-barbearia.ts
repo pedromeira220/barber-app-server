@@ -2,21 +2,16 @@ import { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 import { compare } from "bcryptjs";
 import jwt from 'jsonwebtoken';
+import { z } from "zod";
+import { InternalServerError, UnauthorizedError } from "../http/errors/api-error";
+
+const logarBarbeariaSchema = z.object({
+  email: z.string().email(),
+  senha: z.string()
+})
 
 export const logarBarbearia = async (req: Request, res: Response) => {
-  const {email, senha} = req.body
-
-  if(!email) {
-    return res.status(400).json({
-      msg: "O email é obrigatório"
-    })
-  } 
-
-  if(!senha) {
-    return res.status(400).json({
-      msg: "A senha é obrigatória"
-    })
-  }
+  const {email, senha} = logarBarbeariaSchema.parse(req.body)
 
   const barbeariaEncontrada = await prisma.barbearia.findFirst({
     where: {
@@ -25,17 +20,13 @@ export const logarBarbearia = async (req: Request, res: Response) => {
   })
 
   if(!barbeariaEncontrada) {
-    return res.status(401).json({
-      msg: "Usuário ou senhas incorretos"
-    })
+    throw new UnauthorizedError("Usuário ou senhas incorretos")
   }
 
   const senhasSaoIguais = await compare(senha, barbeariaEncontrada.hash_senha)
 
   if(!senhasSaoIguais) {
-    return res.status(401).json({
-      msg: "Usuário ou senhas incorretos"
-    })
+    throw new UnauthorizedError("Usuário ou senhas incorretos")
   }
 
   try {
@@ -47,7 +38,7 @@ export const logarBarbearia = async (req: Request, res: Response) => {
     return res.status(200).json({ barbearia: { email, id: barbeariaEncontrada.id }, token });
 } catch (error) {
     console.log(error);
-    return res.status(500).json({ msg: "Erro interno do servidor" });
+    throw new InternalServerError("Erro interno do servidor")
 
 }
 }
