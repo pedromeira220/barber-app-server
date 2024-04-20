@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "Barbearia" (
+CREATE TABLE "Barbershop" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "nome" TEXT NOT NULL,
     "email" TEXT NOT NULL,

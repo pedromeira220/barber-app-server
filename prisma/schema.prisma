@@ -13,11 +13,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Barbearia {
-  id               String @id @default(uuid())
-  nome             String
-  email            String
-  hash_senha       String
-  nome_contato     String // Esse será um campo para anotar o nome da pessoa a qual entraremos em contato
-  telefone_contato String
+model Barbershop {
+  id            String @id @default(uuid())
+  name          String
+  email         String
+  password_hash String
+  contact_name  String
+  contact_phone String
 }

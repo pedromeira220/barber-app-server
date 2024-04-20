@@ -1,40 +1,40 @@
-# @name buscar_todas_barbearias
-GET http://localhost:3333/barbearias
+# @name buscar_todas_barbershops
+GET http://localhost:3333/barbershops
 
 ###
 
-# @name buscar__barbearia_por_id
-GET http://localhost:3333/barbearias/f8c4bd54-75be-42c9-ab7b-469f113ab5ca
+# @name buscar__barbershop_por_id
+GET http://localhost:3333/barbershops/f8c4bd54-75be-42c9-ab7b-469f113ab5ca
 
 ###
 
-# @name cadastrar_barbearia
+# @name cadastrar_barbershop
 
-POST http://localhost:3333/barbearias
+POST http://localhost:3333/barbershops
 Content-Type: application/json
 
 {
-  "nome": "Barbearia do Seu Zé", 
-  "email": "seuze@barbearia.com", 
-  "senha": "123", 
-  "nomeContato": "José", 
-  "telefoneContato": "(19) 12345-6789"
+  "name": "Barbershop do Seu Zé", 
+  "email": "seuze@barbershop.com", 
+  "password": "123", 
+  "contactName": "José", 
+  "contactPhone": "(19) 12345-6789"
 }
 
 ###
 
-# @name deletar_barbearia
-DELETE http://localhost:3333/barbearias/5c27dfe8-69aa-47a6-a457-9c63705a6584
+# @name deletar_barbershop
+DELETE http://localhost:3333/barbershops/5c27dfe8-69aa-47a6-a457-9c63705a6584
 
 ###
 
-# @name atualizar_barbearia
-PUT http://localhost:3333/barbearias
+# @name update_barbershop
+PUT http://localhost:3333/barbershops
 Content-Type: application/json
 
 {
   "id": "f8c4bd54-75be-42c9-ab7b-469f113ab5c",
-  "nome": "Barbearia Teste"
+  "name": "Barbershop Teste"
 }
 
 ###
@@ -44,8 +44,8 @@ POST http://localhost:3333/login
 Content-Type: application/json
 
 {
-  "email": "seuze@barbearia.com", 
-  "senha": "123"
+  "email": "seuze@barbershop.com", 
+  "password": "123"
 }
 
 ###
