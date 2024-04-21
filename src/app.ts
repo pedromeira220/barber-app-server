@@ -2,9 +2,10 @@ import express from 'express';
 import 'express-async-errors'
 import { barbershopRouter } from './http/controllers/barbershops/routes';
 
-const app = express()
 import cors from 'cors'
 import { errorMiddleware } from './http/middlewares/error-middleware';
+
+const app = express()
 
 app.use(cors())
 
