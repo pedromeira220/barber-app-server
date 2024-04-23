@@ -14,11 +14,11 @@ POST http://localhost:3333/barbershops
 Content-Type: application/json
 
 {
-  "name": "Barbershop do Seu Zé", 
-  "email": "seuze@barbershop.com", 
+  "name": "Breninho do corte", 
+  "email": "breno@barbearia.com", 
   "password": "123", 
-  "contactName": "José", 
-  "contactPhone": "(19) 12345-6789"
+  "contactName": "Breno", 
+  "contactPhone": "(11) 11111-1111"
 }
 
 ###

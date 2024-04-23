@@ -28,7 +28,7 @@ barbershopRouter.delete("/barbershops/:id", async (req, res) => {
   return deleteBarbershop(req, res)
 })
 
-barbershopRouter.put("/barbershops", async (req, res) => {
+barbershopRouter.put("/barbershops/:id", async (req, res) => {
   return updateBarbershop(req, res)
 })
 
