@@ -24,25 +24,25 @@ export class ApiError extends Error {
 
 export class BadRequestError extends ApiError {
   constructor(message: string, code?: string) {
-    super(message, 400)
+    super(message, 400, code)
   }
 }
 
 export class NotFoundError extends ApiError {
   constructor(message: string, code?: string) {
-    super(message, 404)
+    super(message, 404, code)
   }
 }
 
 export class UnauthorizedError extends ApiError {
   constructor(message: string, code?: string) {
-    super(message, 401)
+    super(message, 401, code)
   }
 }
 
 export class InternalServerError extends ApiError {
   constructor(message: string, code?: string) {
-    super(message, 500)
+    super(message, 500, code)
   }
 }
 
