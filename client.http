@@ -1,3 +1,6 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI0OTg0MTJhLTk2NzMtNDNlMy1iY2EzLTBkNTk0MTI3NWJlOSIsImlhdCI6MTcxNTg3MzIxNX0.KZ5BAjpDfSFXzmbdbk9lsarsU03CtAJzLn5APxWVVWQ
+
+
 # @name buscar_todas_barbershops
 GET http://localhost:3333/barbershops
 
@@ -29,11 +32,11 @@ DELETE http://localhost:3333/barbershops/5c27dfe8-69aa-47a6-a457-9c63705a6584
 ###
 
 # @name update_barbershop
-PUT http://localhost:3333/barbershops
+PUT http://localhost:3333/barbershops/f8c4bd54-75be-42c9-ab7b-469f113ab5c
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-  "id": "f8c4bd54-75be-42c9-ab7b-469f113ab5c",
   "name": "Barbershop Teste"
 }
 
@@ -44,7 +47,7 @@ POST http://localhost:3333/login
 Content-Type: application/json
 
 {
-  "email": "seuze@barbershop.com", 
+  "email": "joao@email.com", 
   "password": "123"
 }
 

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../../database/prisma/prisma";
 import { z } from "zod";
-import { NotFoundError } from "../../errors/api-error";
+import { BadRequestError, NotFoundError } from "../../errors/api-error";
 
 const updateBarbershopParamsSchema = z.object(
   {id: z.string().uuid(),}
@@ -29,7 +29,7 @@ export const updateBarbershop = async (req: Request, res: Response) => {
   if(!barbershopExists){
     throw new NotFoundError("Barbearia não encontrada")
   }
-
+  
   await prisma.barbershop.update({
     where: {
       id

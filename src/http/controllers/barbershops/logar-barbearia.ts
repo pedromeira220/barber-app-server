@@ -4,6 +4,7 @@ import { compare } from "bcryptjs";
 import jwt from 'jsonwebtoken';
 import { z } from "zod";
 import { InternalServerError, UnauthorizedError } from "../../errors/api-error";
+import { env } from "../../../env";
 
 const loginBarbershopSchema = z.object({
   email: z.string().email(),
@@ -30,15 +31,14 @@ export const loginBarbershop = async (req: Request, res: Response) => {
   }
 
   try {
-    const secret = process.env.JWT_SECRET || "" // Só para tirar o erro de tipagem
+    const secret = env.JWT_SECRET
     const token = jwt.sign({
         id: barbershopFound.id,
     }, secret);
 
     return res.status(200).json({ barbershop: { email, id: barbershopFound.id }, token });
-} catch (error) {
+  } catch (error) {
     console.log(error);
     throw new InternalServerError("Erro interno do servidor")
-
-}
+  }
 }

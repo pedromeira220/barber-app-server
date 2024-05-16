@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from 'express'
 import { ZodError } from 'zod'
+import { ApiError } from '../errors/api-error'
 // import { BaseError } from '../helpers/apiError'
 
 export function errorMiddleware(
-  error: Error, // & Partial<BaseError>,
+  error: Error,
   req: Request,
   res: Response,
   next: NextFunction
@@ -11,17 +12,25 @@ export function errorMiddleware(
   console.log("> Error", error)
 
   if(error instanceof ZodError) {
-    error.format()
 
-    return res
-    .status(400)
-    .json(error.format())
+    return res.status(400).json({
+      message: 'Error during validation',
+      errors: error.flatten().fieldErrors,
+      code: "validation-error"
+    })
   }
 
-  const statusCode = /* error.statusCode ?? */ 500
-  /* const message = /* error.statusCode ?  error.message : 'Internal Server Error' */
-  const codeError = /* error.codeError ? error.codeError :  */'error'
+  if(error instanceof ApiError) {
+    return res.status(error.statusCode).json({
+      message: error.message,
+      code: error.code  
+    })
+  }
+
   return res
-    .status(statusCode)
-    .json({ error: true, msg: error.message, code: codeError })
+    .status(500)
+    .json({       
+      message: error.message ?? "Internal Server Error",
+      code: "error"  
+    })
 }

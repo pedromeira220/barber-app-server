@@ -5,6 +5,7 @@ import { registerBarbershop } from "./register-barbershop";
 import { getById } from "./get-by-id";
 import { getAllBarbershops } from "./get-all-barbershops";
 import { deleteBarbershop } from "./delete-barbershop";
+import { checkToken } from "../../middlewares/check-token";
 
 const barbershopRouter = Router()
 
@@ -24,11 +25,11 @@ barbershopRouter.get("/barbershops", async (req, res) => {
   return getAllBarbershops(req, res)
 })
 
-barbershopRouter.delete("/barbershops/:id", async (req, res) => {
+barbershopRouter.delete("/barbershops/:id", checkToken, async (req, res) => {
   return deleteBarbershop(req, res)
 })
 
-barbershopRouter.put("/barbershops/:id", async (req, res) => {
+barbershopRouter.put("/barbershops/:id", checkToken ,async (req, res) => {
   return updateBarbershop(req, res)
 })
 
