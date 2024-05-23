@@ -12,7 +12,7 @@ export const deleteBarbershop = async (req: Request, res: Response) => {
 
   const { id } = deleteSchema.parse(req.params)
 
-  const idFromJwt = getBarbershopIdFromJWT(req)
+  const {id: idFromJwt} = getBarbershopIdFromJWT(req)
 
   if(id !== idFromJwt) {
     throw new UnauthorizedError("Não tem permissão para deletar a barbearia")

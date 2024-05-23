@@ -7,5 +7,7 @@ export const getBarbershopIdFromJWT = (req: any) => {
     throw new InternalServerError("Erro interno do servidor")
   }
 
-  return req.barbershopId as string
+  return {
+    id: req.barbershopId as string
+  }
 }

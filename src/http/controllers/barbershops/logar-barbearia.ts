@@ -34,7 +34,9 @@ export const loginBarbershop = async (req: Request, res: Response) => {
     const secret = env.JWT_SECRET
     const token = jwt.sign({
         id: barbershopFound.id,
-    }, secret);
+    }, secret, {
+      subject: barbershopFound.id
+    });
 
     return res.status(200).json({ barbershop: { email, id: barbershopFound.id }, token });
   } catch (error) {

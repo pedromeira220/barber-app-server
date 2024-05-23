@@ -6,6 +6,7 @@ import { getById } from "./get-by-id";
 import { getAllBarbershops } from "./get-all-barbershops";
 import { deleteBarbershop } from "./delete-barbershop";
 import { checkToken } from "../../middlewares/check-token";
+import { getAuthenticatedBarbershop } from "./get-authenticated-barbershop";
 
 const barbershopRouter = Router()
 
@@ -31,6 +32,10 @@ barbershopRouter.delete("/barbershops/:id", checkToken, async (req, res) => {
 
 barbershopRouter.put("/barbershops/:id", checkToken ,async (req, res) => {
   return updateBarbershop(req, res)
+})
+
+barbershopRouter.get("/barbershops/auth/me", checkToken, async (req, res) => {
+  return getAuthenticatedBarbershop(req, res)
 })
 
 export {barbershopRouter}
