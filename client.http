@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI0OTg0MTJhLTk2NzMtNDNlMy1iY2EzLTBkNTk0MTI3NWJlOSIsImlhdCI6MTcxNTg3MzIxNX0.KZ5BAjpDfSFXzmbdbk9lsarsU03CtAJzLn5APxWVVWQ
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI0OTg0MTJhLTk2NzMtNDNlMy1iY2EzLTBkNTk0MTI3NWJlOSIsImlhdCI6MTcxNjc0NzEzMSwic3ViIjoiYjQ5ODQxMmEtOTY3My00M2UzLWJjYTMtMGQ1OTQxMjc1YmU5In0.iltY48NgigEASrB1JE6oMyM3cEms09nM841FOckfcsc
 
 
 # @name buscar_todas_barbershops
@@ -53,3 +53,17 @@ Content-Type: application/json
 
 ###
 
+# @name register_booking_manually
+
+POST http://localhost:3333/bookings
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "date": "2024-05-26T17:40:56.205Z",
+  "serviceId": "e9319775-6b0e-4b33-98e5-6d8404b5a4f6",
+  "clientId": "1a7761e3-902e-44ba-9697-4e298f75bfc5",
+  "professionalId": "af46da8a-2648-4ab4-87b6-53c586784261"
+}
+
+###
