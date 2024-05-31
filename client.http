@@ -67,3 +67,16 @@ Authorization: Bearer {{token}}
 }
 
 ###
+
+POST http://localhost:3333/services
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Corte e barba",
+  "priceInCents": 6000,
+  "description": "Corte com barba",
+  "durationInMinutes": 45
+}
+
+###

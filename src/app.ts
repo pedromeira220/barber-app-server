@@ -5,6 +5,9 @@ import { bookingsRouter } from './http/controllers/bookings/routes';
 
 import cors from 'cors'
 import { errorMiddleware } from './http/middlewares/error-middleware';
+import { serviceRouter } from './http/controllers/services/routes';
+import { professionalRouter } from './http/controllers/professionals/routes';
+import { clientesRouter } from './http/controllers/clientes/routes';
 
 const app = express()
 
@@ -13,6 +16,9 @@ app.use(cors())
 app.use(express.json())
 app.use(barbershopRouter)
 app.use(bookingsRouter)
+app.use(serviceRouter)
+app.use(professionalRouter)
+app.use(clientesRouter)
 
 app.use(errorMiddleware)
 
