@@ -6,6 +6,7 @@ import { z } from "zod";
 import { getBarbershopIdFromJWT } from "../../provider/get-barbershop-id-from-jwt";
 import { BadRequestError, NotFoundError } from "../../errors/api-error";
 import {addMinutes, getMinutes, setSeconds, setMilliseconds, differenceInMinutes} from "date-fns"
+import { Booking as PrismaBooking } from "@prisma/client";
 
 const registerBookingManuallySchema = z.object({
   date: z.string().datetime(),
@@ -26,7 +27,7 @@ const registerBookingManuallySchema = z.object({
   - A data final do agendamento é soma da duração do serviço com a data inicial
  */
 
-const BOOKING_INTERVAL_IN_MINUTES = 10
+const BOOKING_INTERVAL_IN_MINUTES = 30
 
 export const registerBookingManually = async (req: Request, res: Response) => {
 
@@ -73,14 +74,38 @@ export const registerBookingManually = async (req: Request, res: Response) => {
   const bookingStartDate = bookingDate
   const bookingEndDate = addMinutes(bookingStartDate, service.durationInMinutes)
 
-  if(differenceInMinutes(bookingEndDate, bookingStartDate) < 10) {
-    throw new BadRequestError(`Um agendamento precisa ter no mínimo 10 minutos`)
+  if(differenceInMinutes(bookingEndDate, bookingStartDate) < BOOKING_INTERVAL_IN_MINUTES) {
+    throw new BadRequestError(`Um agendamento precisa ter no mínimo ${BOOKING_INTERVAL_IN_MINUTES} minutos`)
   }
+
+  // const conflictingBookingsRaw = await prisma.$queryRaw<PrismaBooking[]>`
+  //   SELECT * 
+  //   FROM bookings
+  //   WHERE (${bookingStartDate} > start_date AND ${bookingEndDate} > start_date)
+  //   OR (${bookingStartDate} < start_date AND ${bookingEndDate} < end_date)
+  // `
+
+  // if(conflictingBookingsRaw.length == 0) {
+   
+  // }
+
+  await prisma.booking.create({
+    data: {
+      endDate: bookingEndDate,
+      startDate: bookingStartDate,
+      serviceId,
+      barbershopId,
+      clientId,
+      professionalId
+    }
+  })
+  
 
   return res.json({
     date,
     bookingDate,
-    bookingEndDate
+    bookingEndDate,
+    observations
   })
 }
 

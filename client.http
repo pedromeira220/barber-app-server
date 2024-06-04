@@ -60,11 +60,19 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "date": "2024-05-26T17:40:56.205Z",
-  "serviceId": "e9319775-6b0e-4b33-98e5-6d8404b5a4f6",
+  "date": "2024-05-26T18:00:00.205Z",
+  "serviceId": "82e1acbf-f46b-416e-a1a6-1799ac896dc8",
   "clientId": "1a7761e3-902e-44ba-9697-4e298f75bfc5",
   "professionalId": "af46da8a-2648-4ab4-87b6-53c586784261"
 }
+
+###
+
+# @name fetch_bookings_from_auth_barbershop
+
+GET http://localhost:3333/bookings
+Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ###
 
