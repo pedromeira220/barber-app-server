@@ -12,17 +12,17 @@ export const deleteProfessional = async (req: Request, res: Response) => {
 
   const { id } = deleteSchema.parse(req.params)
 
-  const {id: idFromJwt} = getBarbershopIdFromJWT(req)
-
-  if(id !== idFromJwt) {
-    throw new UnauthorizedError("Não tem permissão para deletar esse profissional")
-  }
+  const {id: barbershopIdFromJwt} = getBarbershopIdFromJWT(req)
 
   const professionalFound = await prisma.professional.findFirst({
     where: {
       id
     }
   })
+
+  if(professionalFound?.barbershopId !== barbershopIdFromJwt) {
+    throw new UnauthorizedError("Não tem permissão para deletar esse profissional")
+  }
 
   if(!professionalFound) {
     throw new NotFoundError("profissional não encontrado")
@@ -34,5 +34,5 @@ export const deleteProfessional = async (req: Request, res: Response) => {
     }
   })
 
-  return res.status(201).send()
+  return res.status(204).send()
 }

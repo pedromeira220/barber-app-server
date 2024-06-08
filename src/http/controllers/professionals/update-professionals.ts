@@ -1,17 +1,18 @@
 import { Request, Response } from "express";
 import { prisma } from "../../../database/prisma/prisma";
 import { z } from "zod";
-import { BadRequestError, NotFoundError } from "../../errors/api-error";
+import { BadRequestError, NotFoundError, UnauthorizedError } from "../../errors/api-error";
+import { getBarbershopIdFromJWT } from "../../provider/get-barbershop-id-from-jwt";
 
 const updateProfessionalParamsSchema = z.object(
   {id: z.string().uuid(),}
 )
 
 const updateProfessionalSchema = z.object({
-    name: z.string(),
-    email: z.string(),
-    phone: z.number(),
-    cpf:   z.number(),
+    name: z.string().optional(),
+    email: z.string().optional(),
+    phone: z.string().optional(),
+    cpf:   z.string().optional(),
 })
 
 export const updateProfessional = async (req: Request, res: Response) => {
@@ -20,29 +21,33 @@ export const updateProfessional = async (req: Request, res: Response) => {
 
   const { email, phone, name, cpf, } = updateProfessionalSchema.parse(req.body)
 
-  const ProfessionalExists = await prisma.professional.findFirst({
+  const professionalExists = await prisma.professional.findFirst({
     where: {
       id
     }
   })
 
-  if(!ProfessionalExists){
+  if(!professionalExists){
     throw new NotFoundError("professional não encontrado")
   }
 
-   const {id: barbershopId} = getBarbershopIdFromJWT(req)
+   const {id: barbershopIdFromJwt} = getBarbershopIdFromJWT(req)
+
+   if(professionalExists.barbershopId !== barbershopIdFromJwt) {
+    throw new UnauthorizedError("Não tem permissão para atualizar esse profissional")
+   }
   
   await prisma.professional.update({
     where: {
       id
     },
     data: {
-    name,
-    email,
-    phone,
-    cpf,
+      name,
+      email,
+      phone,
+      cpf,
     }
   })
 
-  return res.send()
+  return res.status(200).end()
 }
