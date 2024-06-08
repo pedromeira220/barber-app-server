@@ -12,11 +12,7 @@ export const deleteService = async (req: Request, res: Response) => {
 
   const { id } = deleteSchema.parse(req.params)
 
-  const {id: idFromJwt} = getBarbershopIdFromJWT(req)
-
-  if(id !== idFromJwt) {
-    throw new UnauthorizedError("Não tem permissão para deletar esse serviço")
-  }
+  const {id: barbershopId} = getBarbershopIdFromJWT(req)
 
   const serviceFound = await prisma.service.findFirst({
     where: {
@@ -26,6 +22,10 @@ export const deleteService = async (req: Request, res: Response) => {
 
   if(!serviceFound) {
     throw new NotFoundError("serviço não encontrado")
+  }
+
+  if(serviceFound.barbershopId !== barbershopId) {
+    throw new UnauthorizedError("Não tem permissão para deletar esse serviço")
   }
 
   await prisma.service.delete({

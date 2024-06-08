@@ -5,7 +5,7 @@ import { getBarbershopIdFromJWT } from "../../provider/get-barbershop-id-from-jw
 
 const createClientesBodySchema = z.object({
     name: z.string(),
-    phone: z.number(),
+    phone: z.string(),
 })
 
 export const createClientes = async (req: Request, res: Response) => {

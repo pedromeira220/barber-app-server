@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { prisma } from "../../../database/prisma/prisma";
 import { z } from "zod";
 import { BadRequestError, NotFoundError } from "../../errors/api-error";
+import { getBarbershopIdFromJWT } from "../../provider/get-barbershop-id-from-jwt";
 
 const updateServiceParamsSchema = z.object(
   {id: z.string().uuid(),}
@@ -45,5 +46,5 @@ export const updateService = async (req: Request, res: Response) => {
     }
   })
 
-  return res.send()
+  return res.status(200).end(200)
 }

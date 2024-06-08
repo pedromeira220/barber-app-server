@@ -9,7 +9,7 @@ const updateClientParamsSchema = z.object(
 
 const updateClientSchema = z.object({
     name: z.string(),
-    phone: z.number(),
+    phone: z.string(),
 })
 
 export const updateClient = async (req: Request, res: Response) => {
@@ -34,10 +34,10 @@ export const updateClient = async (req: Request, res: Response) => {
       id
     },
     data: {
-    name,
-    phone,
+      name,
+      phone,
     }
   })
 
-  return res.send()
+  return res.status(200).end()
 }

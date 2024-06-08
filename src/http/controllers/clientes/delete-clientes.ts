@@ -12,11 +12,7 @@ export const deleteClient = async (req: Request, res: Response) => {
 
   const { id } = deleteSchema.parse(req.params)
 
-  const {id: idFromJwt} = getBarbershopIdFromJWT(req)
-
-  if(id !== idFromJwt) {
-    throw new UnauthorizedError("Não tem permissão para deletar esse cliente")
-  }
+  const {id: barbershopIdFromJwt} = getBarbershopIdFromJWT(req)
 
   const clientFound = await prisma.client.findFirst({
     where: {
@@ -28,11 +24,15 @@ export const deleteClient = async (req: Request, res: Response) => {
     throw new NotFoundError("cliente não encontrado")
   }
 
+  if(clientFound.barbershopId !== barbershopIdFromJwt) {
+    throw new UnauthorizedError("Não tem permissão para deletar esse cliente")
+  }
+
   await prisma.client.delete({
     where: {
       id
     }
   })
 
-  return res.status(201).send()
+  return res.status(204).send()
 }

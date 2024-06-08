@@ -4,9 +4,9 @@ import { BarbershopPresenter } from "../../presenters/barbershop-presenter";
 
 export const getAllService = async (req: Request, res: Response) => {
 
-  const service = await prisma.barbershop.findMany()
+  const service = await prisma.service.findMany()
 
   return res.json({
-    barbershops: service.map(BarbershopPresenter.toHttp)
+    barbershops: service
   })
 }

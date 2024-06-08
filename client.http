@@ -111,3 +111,20 @@ Authorization: Bearer {{token}}
 DELETE http://localhost:3333/professionals/bd30bb07-f924-4128-b41c-72700835a23b
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+###
+
+Get http://localhost:3333/clients
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+POST http://localhost:3333/clients
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "João Cliente",
+  "phone": "(19) 12345-6789"
+}
