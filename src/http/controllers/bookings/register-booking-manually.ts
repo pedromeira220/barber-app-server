@@ -11,9 +11,10 @@ import { Booking as PrismaBooking } from "@prisma/client";
 const registerBookingManuallySchema = z.object({
   date: z.string().datetime(),
   serviceId: z.string().uuid(),
-  clientId: z.string().uuid(),
   observations: z.string().optional(),
-  professionalId: z.string().uuid()
+  professionalId: z.string().uuid(),
+  clientPhone: z.string(),
+  clientName: z.string()
 })
 
 /**
@@ -31,7 +32,7 @@ const BOOKING_INTERVAL_IN_MINUTES = 30
 
 export const registerBookingManually = async (req: Request, res: Response) => {
 
-  const {clientId,date,observations,serviceId, professionalId} = registerBookingManuallySchema.parse(req.body)
+  const {clientName,clientPhone,date,observations,serviceId, professionalId} = registerBookingManuallySchema.parse(req.body)
 
   const {id: barbershopId} = getBarbershopIdFromJWT(req)
 
@@ -45,14 +46,24 @@ export const registerBookingManually = async (req: Request, res: Response) => {
     throw new NotFoundError("Serviço não encontrado")
   }
 
-  const client = await prisma.client.findFirst({
+  const clientFound = await prisma.client.findUnique({
     where: {
-      id: clientId
+      phone: clientPhone
     }
   })
+  let clientId = null
 
-  if(!client) {
-    throw new NotFoundError("Cliente não encontrado")
+  if(!clientFound) {
+    const client = await prisma.client.create({
+      data: {
+        name: clientName,
+        phone: clientPhone,
+        barbershopId: barbershopId
+      }
+    })
+    clientId = client.id
+  } else {
+    clientId = clientFound.id
   }
 
   const professional = await prisma.professional.findFirst({

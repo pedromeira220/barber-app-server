@@ -58,7 +58,7 @@ model Service {
 model Client {
   id    String @id @default(uuid())
   name  String
-  phone String
+  phone String @unique
 
   barbershop   Barbershop @relation(fields: [barbershopId], references: [id])
   barbershopId String     @map("barbershop_id")

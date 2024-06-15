@@ -19,6 +19,6 @@ export const getAllServicesFromBarbershop = async (req: Request, res: Response) 
   })
 
   return res.json({
-    professionals: services
+    services: services
   })
 }
