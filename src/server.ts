@@ -1,7 +1,8 @@
 import { app } from "./app";
 import "dotenv"
+import { env } from "./env";
 
-const PORT = 3333
+const PORT = env.PORT
 
 app.listen(PORT, () => {
   console.log(`> Server running on port: ${PORT}`);
