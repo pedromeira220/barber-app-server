@@ -138,6 +138,12 @@ Authorization: Bearer {{token}}
 
 ###
 
+GET http://localhost:3333/metrics/income-per-day?month=9&year=2024
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
 POST http://localhost:3333/payment
 Content-Type: application/json
 Authorization: Bearer {{token}}
