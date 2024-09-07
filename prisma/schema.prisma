@@ -34,9 +34,10 @@ model Professional {
   phone String
   cpf   String
 
-  barbershop   Barbershop @relation(fields: [barbershopId], references: [id])
-  barbershopId String     @map("barbershop_id")
+  barbershop   Barbershop   @relation(fields: [barbershopId], references: [id])
+  barbershopId String       @map("barbershop_id")
   Booking      Booking[]
+  Commission   Commission[]
 
   @@map("professionals")
 }
@@ -77,11 +78,36 @@ model Booking {
   serviceId      String   @map("service_id")
   professionalId String   @map("professional_id")
   observations   String?
+  status         String
 
   professional Professional @relation(fields: [professionalId], references: [id])
   service      Service      @relation(fields: [serviceId], references: [id])
   barbershop   Barbershop   @relation(fields: [barbershopId], references: [id])
   client       Client       @relation(fields: [clientId], references: [id])
+  Payment      Payment[]
 
   @@map("bookings")
+}
+
+model Payment {
+  id           String   @id @default(uuid())
+  date         DateTime
+  valueInCents Int      @map("value_in_cents")
+  method       String
+  bookingId    String   @map("booking_id")
+
+  booking    Booking      @relation(fields: [bookingId], references: [id])
+  Commission Commission[]
+}
+
+model Commission {
+  id                    String   @id @default(uuid())
+  commissionPercentage  Float    @map("commission_percentage")
+  commisionValueInCents Int      @map("commission_value_in_cents")
+  date                  DateTime
+  professionalId        String   @map("professional_id")
+  paymentId             String   @map("paymnent_id")
+
+  payment      Payment      @relation(fields: [paymentId], references: [id])
+  professional Professional @relation(fields: [professionalId], references: [id])
 }

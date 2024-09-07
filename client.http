@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI0OTg0MTJhLTk2NzMtNDNlMy1iY2EzLTBkNTk0MTI3NWJlOSIsImlhdCI6MTcxNjc0NzEzMSwic3ViIjoiYjQ5ODQxMmEtOTY3My00M2UzLWJjYTMtMGQ1OTQxMjc1YmU5In0.iltY48NgigEASrB1JE6oMyM3cEms09nM841FOckfcsc
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMDllN2M3LTdjYTYtNGY2Yi05YTRjLWNjNzZmNmJiNTM2MyIsImlhdCI6MTcyNTcyNjU2MSwic3ViIjoiZmEwOWU3YzctN2NhNi00ZjZiLTlhNGMtY2M3NmY2YmI1MzYzIn0.iyjCO03kZYQEWhqgj7BerYY2kRGqLmnermPTaFAcEj4
 
 
 # @name buscar_todas_barbershops
@@ -17,10 +17,10 @@ POST http://localhost:3333/barbershops
 Content-Type: application/json
 
 {
-  "name": "Breninho do corte", 
-  "email": "breno@barbearia.com", 
+  "name": "HairSalon", 
+  "email": "hair@salon.com", 
   "password": "123", 
-  "contactName": "Breno", 
+  "contactName": "Pedro", 
   "contactPhone": "(11) 11111-1111"
 }
 
@@ -47,7 +47,7 @@ POST http://localhost:3333/login
 Content-Type: application/json
 
 {
-  "email": "joao@email.com", 
+  "email": "joao@barbearia.com", 
   "password": "123"
 }
 
@@ -63,7 +63,8 @@ Authorization: Bearer {{token}}
   "date": "2024-05-26T18:00:00.205Z",
   "serviceId": "82e1acbf-f46b-416e-a1a6-1799ac896dc8",
   "clientId": "1a7761e3-902e-44ba-9697-4e298f75bfc5",
-  "professionalId": "af46da8a-2648-4ab4-87b6-53c586784261"
+  "professionalId": "af46da8a-2648-4ab4-87b6-53c586784261",
+  "status": "PENDING"
 }
 
 ###
@@ -81,10 +82,10 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Corte e barba",
-  "priceInCents": 6000,
-  "description": "Corte com barba",
-  "durationInMinutes": 45
+  "name": "Corte",
+  "priceInCents": 3500,
+  "description": "Corte",
+  "durationInMinutes": 30
 }
 
 ###
@@ -95,7 +96,7 @@ Authorization: Bearer {{token}}
 
 {
   "name": "João Barbeiro",
-  "email": "joao@barbearia.com",
+  "email": "joao@email.com",
   "phone": "(19) 12345-6789",
   "cpf": "123.456.789-01"
 }
@@ -127,4 +128,22 @@ Authorization: Bearer {{token}}
 {
   "name": "João Cliente",
   "phone": "(19) 12345-6789"
+}
+
+###
+
+GET http://localhost:3333/metrics?month=9&year=2024
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+POST http://localhost:3333/payment
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "date": "2024-09-04T10:30:00.000Z",
+  "bookingId": "7a932855-fbd9-4691-8156-221b6cc42301",
+  "method": "CARD"
 }

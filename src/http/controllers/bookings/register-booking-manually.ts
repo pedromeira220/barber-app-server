@@ -14,7 +14,8 @@ const registerBookingManuallySchema = z.object({
   observations: z.string().optional(),
   professionalId: z.string().uuid(),
   clientPhone: z.string(),
-  clientName: z.string()
+  clientName: z.string(),
+  status: z.enum(["PENDING", "COMPLETED", "CANCELED"])
 })
 
 /**
@@ -32,7 +33,7 @@ const BOOKING_INTERVAL_IN_MINUTES = 30
 
 export const registerBookingManually = async (req: Request, res: Response) => {
 
-  const {clientName,clientPhone,date,observations,serviceId, professionalId} = registerBookingManuallySchema.parse(req.body)
+  const {clientName,clientPhone,date,observations,serviceId, professionalId, status} = registerBookingManuallySchema.parse(req.body)
 
   const {id: barbershopId} = getBarbershopIdFromJWT(req)
 
@@ -107,7 +108,8 @@ export const registerBookingManually = async (req: Request, res: Response) => {
       serviceId,
       barbershopId,
       clientId,
-      professionalId
+      professionalId,
+      status
     }
   })
   
