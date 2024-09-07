@@ -138,7 +138,19 @@ Authorization: Bearer {{token}}
 
 ###
 
-GET http://localhost:3333/metrics/income-per-day?month=9&year=2024
+GET http://localhost:3333/metrics/income-per-day?month=7&year=2024
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET http://localhost:3333/metrics/income-per-professional?month=9&year=2024
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET http://localhost:3333/metrics/average-bookings-per-day-of-week?month=9&year=2024
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -149,7 +161,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "date": "2024-09-04T10:30:00.000Z",
+  "date": "2024-08-22T10:30:00.000Z",
   "bookingId": "7a932855-fbd9-4691-8156-221b6cc42301",
   "method": "CARD"
 }

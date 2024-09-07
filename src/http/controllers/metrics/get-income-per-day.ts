@@ -34,6 +34,15 @@ export const getIncomePerDay = async (req: Request, res: Response) => {
     by: "date",
     _sum: {
       valueInCents: true
+    },
+    where: {
+      date: {
+        gte: firstDayOfMonth,
+        lte: firstDayOfNextMonth
+      },
+      booking: {
+        barbershopId: barbershopIdFromJwt
+      }
     }
   }) 
 
@@ -45,7 +54,7 @@ export const getIncomePerDay = async (req: Request, res: Response) => {
   })
   
 
- return res.status(200).json({
+  return res.status(200).json({
     incomePerDay
- })
+  })
 }

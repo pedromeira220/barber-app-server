@@ -98,6 +98,8 @@ model Payment {
 
   booking    Booking      @relation(fields: [bookingId], references: [id])
   Commission Commission[]
+
+  @@map("payments")
 }
 
 model Commission {
@@ -110,4 +112,6 @@ model Commission {
 
   payment      Payment      @relation(fields: [paymentId], references: [id])
   professional Professional @relation(fields: [professionalId], references: [id])
+
+  @@map("commissions")
 }
