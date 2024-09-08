@@ -154,9 +154,17 @@ GET http://localhost:3333/metrics/average-bookings-per-day-of-week?month=9&year=
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
+
 ###
 
-POST http://localhost:3333/payment
+GET http://localhost:3333/payments
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+POST http://localhost:3333/payments
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

@@ -7,13 +7,14 @@ import { NotFoundError, UnauthorizedError } from "../../errors/api-error";
 const registerPaymentManuallyBodySchema = z.object({
   date: z.string().datetime(),
   bookingId: z.string().uuid(),
-  method: z.enum(["CARD", "PIX", "CASH"])
+  method: z.enum(["CARD", "PIX", "CASH"]),
+  valueInCents: z.number().optional()
 })
 
 export const registerPaymentManually = async (req: Request, res: Response) => {
   const {id: barbershopIdFromJwt} = getBarbershopIdFromJWT(req)
 
-  const {bookingId,date,method} = registerPaymentManuallyBodySchema.parse(req.body)
+  const {bookingId,date,method, valueInCents} = registerPaymentManuallyBodySchema.parse(req.body)
 
   const booking = await prisma.booking.findFirst({
     where: {
@@ -36,8 +37,17 @@ export const registerPaymentManually = async (req: Request, res: Response) => {
     data: {
       date: new Date(date),
       method,
-      valueInCents: booking.service.priceInCents,
+      valueInCents: valueInCents ?? booking.service.priceInCents,
       bookingId
+    }
+  })
+
+  await prisma.booking.update({
+    data: {
+      status: "COMPLETED"
+    },
+    where: {
+      id: bookingId
     }
   })
 
