@@ -21,7 +21,7 @@ async function main() {
     Array.from({ length: 3 }).map(() =>
       prisma.professional.create({
         data: {
-          name: faker.person.fullName(),
+          name: faker.person.fullName({sex: "male"}),
           email: faker.internet.email(),
           phone: faker.phone.number(),
           cpf: faker.string.uuid(),
@@ -52,7 +52,7 @@ async function main() {
     Array.from({ length: 5 }).map(() =>
       prisma.client.create({
         data: {
-          name: faker.person.fullName(),
+          name: faker.person.fullName({sex: "male"}),
           phone: faker.phone.number(),
           barbershopId: barbershop.id,
         },

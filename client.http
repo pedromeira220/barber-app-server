@@ -184,3 +184,16 @@ Authorization: Bearer {{token}}
 GET http://localhost:3333/commissions?month=9&year=2024
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+###
+
+GET http://localhost:3333/metrics/professional-income?month=9&year=2024
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET http://localhost:3333/metrics/barbershop-income-per-professional?month=9&year=2024
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
