@@ -43,11 +43,12 @@ model Professional {
 }
 
 model Service {
-  id                String @id @default(uuid())
-  name              String
-  priceInCents      Int    @map("price_in_cents")
-  description       String
-  durationInMinutes Int    @map("duration_in_minutes")
+  id                   String @id @default(uuid())
+  name                 String
+  priceInCents         Int    @map("price_in_cents")
+  description          String
+  durationInMinutes    Int    @map("duration_in_minutes")
+  commissionPercentage Float  @default(0) @map("commission_percentage")
 
   barbershop   Barbershop @relation(fields: [barbershopId], references: [id])
   barbershopId String     @map("barbershop_id")
@@ -103,12 +104,12 @@ model Payment {
 }
 
 model Commission {
-  id                    String   @id @default(uuid())
-  commissionPercentage  Float    @map("commission_percentage")
-  commisionValueInCents Int      @map("commission_value_in_cents")
-  date                  DateTime
-  professionalId        String   @map("professional_id")
-  paymentId             String   @map("paymnent_id")
+  id                     String   @id @default(uuid())
+  commissionPercentage   Float    @map("commission_percentage")
+  commissionValueInCents Int      @map("commission_value_in_cents")
+  date                   DateTime
+  professionalId         String   @map("professional_id")
+  paymentId              String   @map("payment_id")
 
   payment      Payment      @relation(fields: [paymentId], references: [id])
   professional Professional @relation(fields: [professionalId], references: [id])

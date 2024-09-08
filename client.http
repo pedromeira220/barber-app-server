@@ -1,5 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMDllN2M3LTdjYTYtNGY2Yi05YTRjLWNjNzZmNmJiNTM2MyIsImlhdCI6MTcyNTcyNjU2MSwic3ViIjoiZmEwOWU3YzctN2NhNi00ZjZiLTlhNGMtY2M3NmY2YmI1MzYzIn0.iyjCO03kZYQEWhqgj7BerYY2kRGqLmnermPTaFAcEj4
-
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI1ZGVhZjU2LWY3NWQtNGY5Ny04ZjEzLTQ0YzY0YzhlNTJlMSIsImlhdCI6MTcyNTgxNzAwMiwic3ViIjoiMjVkZWFmNTYtZjc1ZC00Zjk3LThmMTMtNDRjNjRjOGU1MmUxIn0.lUsod6YzA1Qa5_dQdm8jF83bEI-T3Yr0EaT86OHCU0o
 
 # @name buscar_todas_barbershops
 GET http://localhost:3333/barbershops
@@ -47,7 +46,7 @@ POST http://localhost:3333/login
 Content-Type: application/json
 
 {
-  "email": "joao@barbearia.com", 
+  "email": "hair@salon.com", 
   "password": "123"
 }
 
@@ -173,3 +172,15 @@ Authorization: Bearer {{token}}
   "bookingId": "7a932855-fbd9-4691-8156-221b6cc42301",
   "method": "CARD"
 }
+
+###
+
+GET http://localhost:3333/commissions/income-metrics?month=9&year=2024
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET http://localhost:3333/commissions?month=9&year=2024
+Content-Type: application/json
+Authorization: Bearer {{token}}

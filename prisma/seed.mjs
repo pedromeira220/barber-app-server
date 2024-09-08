@@ -39,8 +39,9 @@ async function main() {
           name: serviceName,
           priceInCents: faker.number.int({ min: 3000, max: 6000 }),
           description: faker.lorem.sentence(),
-          durationInMinutes: faker.number.int({ min: 30, max: 60 }),
+          durationInMinutes: faker.number.int({ min: 30, max: 90, multipleOf: 30 }),
           barbershopId: barbershop.id,
+          commissionPercentage: faker.number.int({ min: 30, max: 50 }) / 100
         },
       })
     )
@@ -81,21 +82,35 @@ async function main() {
           observations: faker.lorem.sentence(),
           status: 'COMPLETED',
         },
+        include: {
+          service: true
+        }
       });
     })
   );
 
   // Cria pagamentos relacionados aos agendamentos
   await Promise.all(
-    bookings.map((booking) =>
-      prisma.payment.create({
+    bookings.map(async (booking) => {
+      const payment = await prisma.payment.create({
         data: {
           date: booking.startDate,
-          valueInCents: faker.number.int({ min: 1000, max: 5000 }),
+          valueInCents: booking.service.priceInCents,
           method: faker.helpers.arrayElement(['CREDIT', 'CASH', 'PIX']),
           bookingId: booking.id,
         },
       })
+
+      await prisma.commission.create({
+        data: {
+          date: booking.startDate,
+          commissionPercentage: booking.service.commissionPercentage,
+          commissionValueInCents: booking.service.commissionPercentage * payment.valueInCents,
+          paymentId: payment.id,
+          professionalId: booking.professionalId
+        }
+      })
+    }
     )
   );
 

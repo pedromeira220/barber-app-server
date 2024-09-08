@@ -33,11 +33,13 @@ export const registerPaymentManually = async (req: Request, res: Response) => {
     throw new UnauthorizedError("Sem permissão pra acessar")
   }
 
-  await prisma.payment.create({
+  const paymentValueInCents = valueInCents ?? booking.service.priceInCents
+
+  const paymentCreated = await prisma.payment.create({
     data: {
       date: new Date(date),
       method,
-      valueInCents: valueInCents ?? booking.service.priceInCents,
+      valueInCents: paymentValueInCents,
       bookingId
     }
   })
@@ -48,6 +50,16 @@ export const registerPaymentManually = async (req: Request, res: Response) => {
     },
     where: {
       id: bookingId
+    }
+  })
+
+  await prisma.commission.create({
+    data: {
+      date: new Date(date),
+      commissionPercentage: booking.service.commissionPercentage,
+      commissionValueInCents: booking.service.commissionPercentage * paymentValueInCents,
+      paymentId: paymentCreated.id,
+      professionalId: booking.professionalId
     }
   })
 

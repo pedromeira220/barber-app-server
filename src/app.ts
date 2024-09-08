@@ -10,6 +10,7 @@ import { professionalRouter } from './http/controllers/professionals/routes';
 import { clientesRouter } from './http/controllers/clientes/routes';
 import { metricsRouter } from './http/controllers/metrics/routes';
 import { paymentRouter } from './http/controllers/payment/routes';
+import { commissionsRouter } from './http/controllers/commissions/routes';
 
 const app = express()
 
@@ -23,6 +24,7 @@ app.use(professionalRouter)
 app.use(clientesRouter)
 app.use(metricsRouter)
 app.use(paymentRouter)
+app.use(commissionsRouter)
 
 app.use(errorMiddleware)
 
