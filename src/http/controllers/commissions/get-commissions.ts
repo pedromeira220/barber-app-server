@@ -14,6 +14,10 @@ export const getCommissions = async (req: Request, res: Response) => {
 
   const { month, year } = getCommissionsParamsSchemaSchema.parse(req.query)
   
+  const startOfMonth = new Date(`${year}-${month.toString().padStart(2, '0')}-01T00:00:00Z`);
+  const endOfMonth = new Date(new Date(startOfMonth).setUTCMonth(startOfMonth.getUTCMonth() + 1));
+
+
   // Query to get commissions for a specific month and year
   const commissions = await prisma.commission.findMany({
     where: {
@@ -23,8 +27,8 @@ export const getCommissions = async (req: Request, res: Response) => {
         }
       },
       date: {
-        gte: new Date(`${year}-${month.toString().padStart(2, '0')}-01T00:00:00Z`), // Start of the month
-        lt: new Date(`${year}-${(month + 1).toString().padStart(2, '0')}-01T00:00:00Z`) // Start of the next month
+        gte: startOfMonth,
+        lt: endOfMonth 
       }
     },
     include: {
